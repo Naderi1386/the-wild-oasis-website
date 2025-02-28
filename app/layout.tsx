@@ -2,13 +2,12 @@ import { ReactNode } from "react";
 import "@/app/_styles/globals.css";
 import { Metadata } from "next";
 
-
-import {Josefin_Sans} from 'next/font/google'
+import { Josefin_Sans } from "next/font/google";
 import Header from "./_components/Header";
-const josefin=Josefin_Sans({
-  subsets:['latin'],
-  display:"swap"
-})
+const josefin = Josefin_Sans({
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: {
@@ -26,9 +25,15 @@ interface RootLayoutPropsType {
 export default function RootLayout({ children }: RootLayoutPropsType) {
   return (
     <html lang="en">
-      <body className={`${josefin.className} bg-primary-950 text-primary-100 min-h-screen`}>
+      <body
+        className={`${josefin.className} antialiased bg-primary-950 text-primary-100 min-h-screen flex flex-col mid-h-min-h-screen`}
+      >
         <Header />
-        <main>{children}</main>
+        <div className="grow">
+          <main className="max-w-[80rem] mx-auto bg-red-500 py-12 px-8">
+            {children}
+          </main>
+        </div>
       </body>
     </html>
   );
