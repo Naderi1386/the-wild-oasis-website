@@ -26,13 +26,11 @@ export default function RootLayout({ children }: RootLayoutPropsType) {
   return (
     <html lang="en">
       <body
-        className={`${josefin.className} antialiased bg-primary-950 text-primary-100 min-h-screen flex flex-col mid-h-min-h-screen`}
+        className={`${josefin.className} relative  antialiased bg-primary-950 text-primary-100 min-h-screen flex flex-col mid-h-min-h-screen`}
       >
         <Header />
-        <div className="grow">
-          <main className="max-w-[80rem] mx-auto bg-red-500 py-12 px-8">
-            {children}
-          </main>
+        <div className="grow ">
+          <main className="max-w-[80rem] mx-auto py-12 px-8 ">{children}</main>
         </div>
       </body>
     </html>
