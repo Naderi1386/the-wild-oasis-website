@@ -36,9 +36,9 @@ const page = () => {
         </div>
       </div>
 
-      <div className="col-span-2 ">
+      <div className="col-span-2">
         <Image
-        placeholder="blur"
+          placeholder="blur"
           src={image1}
           alt="Family sitting around a fire pit in front of cabin"
           quality={80}

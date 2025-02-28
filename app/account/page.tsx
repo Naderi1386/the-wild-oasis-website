@@ -5,8 +5,12 @@ export const metadata: Metadata = {
 };
 const page = () => {
   return (
-    <div>account page</div>
-  )
+    <div>
+      <h2 className="font-semibold text-2xl text-accent-400 mb-4">
+        Welcome Hosein,
+      </h2>
+    </div>
+  );
 }
 
 export default page
