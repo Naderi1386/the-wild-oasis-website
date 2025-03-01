@@ -1,5 +1,6 @@
 import { UsersIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
+import Link from "next/link";
 export interface CabinType {
   id: string;
   name: string;
@@ -14,14 +15,21 @@ interface CabinCardPropsType {
 
 function CabinCard({ cabin }: CabinCardPropsType) {
   const { id, name, maxCapacity, regularPrice, discount, image } = cabin;
+  console.log(image);
+  
 
   return (
     <div className="flex border-primary-800 border">
+      <div className="relative flex-1">
       <Image
+        fill
         src={image}
         alt={`Cabin ${name}`}
-        className="flex-1 border-r border-primary-800"
+        
+        className="flex-1 border-r border-primary-800 object-cover"
       />
+
+      </div>
 
       <div className="flex-grow">
         <div className="pt-5 pb-4 px-7 bg-primary-950">
@@ -54,12 +62,12 @@ function CabinCard({ cabin }: CabinCardPropsType) {
         </div>
 
         <div className="bg-primary-950 border-t border-t-primary-800 text-right">
-          <a
+          <Link
             href={`/cabins/${id}`}
             className="border-l border-primary-800 py-4 px-6 inline-block hover:bg-accent-600 transition-all hover:text-primary-900"
           >
             Details & reservation &rarr;
-          </a>
+          </Link>
         </div>
       </div>
     </div>
