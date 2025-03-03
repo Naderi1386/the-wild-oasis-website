@@ -1,9 +1,8 @@
+import Spinner from "./_components/Spinner"
 
 const loading = () => {
   return (
-    <div>
-        <p>L O A D I N G . . . </p>
-    </div>
+   <Spinner />
   )
 }
 
