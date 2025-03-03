@@ -8,6 +8,7 @@ export interface CabinType {
   regularPrice: number;
   discount: number;
   image: string;
+  description:string;
 }
 interface CabinCardPropsType {
   cabin: CabinType;
