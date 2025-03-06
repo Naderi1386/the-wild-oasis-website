@@ -1,28 +1,41 @@
 import { CabinType } from "@/app/_components/CabinCard";
-import { getCabin } from "@/app/_lib/data-service";
+import { getCabin, getCabins } from "@/app/_lib/data-service";
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 
-
-interface ParamsType{
-    cabinId:string
+interface ParamsType {
+  cabinId: string;
 }
 
-interface PagePropsType{
-    params:ParamsType
+interface PagePropsType {
+  params: ParamsType;
+}
+
+export async function generateMetadata({ params }: PagePropsType) {
+  const { name } = (await getCabin(params.cabinId)) as CabinType;
+  return { title: `Cabin ${name}` };
+}
+export async function generateStaticParams() {
+  const cabins = (await getCabins()) as CabinType[];
+  return cabins.map((cabin) => ({ cabinId: String(cabin.id) }));
 }
 
 const page = async ({ params }: PagePropsType) => {
-    const cabinID=params.cabinId
-    const cabin=await getCabin(cabinID) as CabinType
-  const { id, name, maxCapacity, regularPrice, discount, image, description } =
+  const cabinID = params.cabinId;
+  const cabin = (await getCabin(cabinID)) as CabinType;
+  const {  name, maxCapacity,   image, description } =
     cabin;
 
   return (
     <div className="max-w-6xl mx-auto mt-8">
       <div className="grid grid-cols-[3fr_4fr] gap-20 border border-primary-800 py-3 px-10 mb-24">
         <div className="relative scale-[1.15] -translate-x-3">
-          <Image fill className="object-cover" src={image} alt={`Cabin ${name}`} />
+          <Image
+            fill
+            className="object-cover"
+            src={image}
+            alt={`Cabin ${name}`}
+          />
         </div>
 
         <div>
@@ -66,4 +79,4 @@ const page = async ({ params }: PagePropsType) => {
   );
 };
 
-export default page
+export default page;
