@@ -28,13 +28,13 @@ interface ReservationCardPropsType {
 function ReservationCard({ booking }: ReservationCardPropsType) {
   const {
     id,
-    guestId,
+    
     startDate,
     endDate,
     numNights,
     totalPrice,
     numGuests,
-    status,
+    
     created_at,
     cabins: { name, image },
   } = booking;

@@ -9,6 +9,8 @@ interface SelectCountryPropsType {
 
 async function SelectCountry({ defaultCountry, name, id, className }:SelectCountryPropsType) {
   const countries = await getCountries();
+  console.log(countries);
+  
   const flag =
     countries.find((country) => country.name === defaultCountry)?.flag ?? '';
 
