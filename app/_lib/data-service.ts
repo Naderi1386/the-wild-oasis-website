@@ -135,6 +135,11 @@ export const getCabins = async function () {
 
 //   return data;
 // }
+export interface CountryType {
+  name: string;
+  flag: string;
+  independent: boolean;
+}
 
 export async function getCountries() {
   try {

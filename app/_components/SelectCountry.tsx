@@ -1,4 +1,4 @@
-import { getCountries } from '@/app/_lib/data-service';
+import { CountryType, getCountries } from '@/app/_lib/data-service';
 
 interface SelectCountryPropsType {
   defaultCountry: string;
@@ -8,8 +8,8 @@ interface SelectCountryPropsType {
 }
 
 async function SelectCountry({ defaultCountry, name, id, className }:SelectCountryPropsType) {
-  const countries = await getCountries();
-  console.log(countries);
+  const countries = await getCountries() as CountryType[];
+ 
   
   const flag =
     countries.find((country) => country.name === defaultCountry)?.flag ?? '';
