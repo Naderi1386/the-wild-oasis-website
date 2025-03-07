@@ -15,8 +15,7 @@ interface CabinCardPropsType {
 }
 
 function CabinCard({ cabin }: CabinCardPropsType) {
-  const { id, name, maxCapacity, regularPrice, discount, image } = cabin;
-  console.log(image);
+  const { id, name, maxCapacity, regularPrice, discount } = cabin;
   
 
   return (
@@ -24,7 +23,7 @@ function CabinCard({ cabin }: CabinCardPropsType) {
       <div className="relative flex-1">
       <Image
         fill
-        src={image}
+        src={""}
         alt={`Cabin ${name}`}
         
         className="flex-1 border-r border-primary-800 object-cover"
