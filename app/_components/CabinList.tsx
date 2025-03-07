@@ -1,6 +1,5 @@
 import CabinCard, { CabinType } from "./CabinCard";
 import { getCabins } from "../_lib/data-service";
-
 const CabinList = async () => {
   const cabins = (await getCabins()) as CabinType[];
   const isCabins = cabins.length > 0;

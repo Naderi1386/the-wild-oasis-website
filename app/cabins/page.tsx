@@ -3,11 +3,14 @@ import CabinList from "../_components/CabinList";
 import { Suspense } from "react";
 import Spinner from "../_components/Spinner";
 
+export const revalidate = 3600;
+
+
 export const metadata: Metadata = {
   title: "Cabins",
 };
 
-const page =  () => {
+const page = () => {
   return (
     <div>
       <h1 className="text-4xl mb-5 text-accent-400 font-medium">
@@ -21,7 +24,7 @@ const page =  () => {
         away from home. The perfect spot for a peaceful, calm vacation. Welcome
         to paradise.
       </p>
-      <Suspense fallback={<Spinner/>}>
+      <Suspense fallback={<Spinner />}>
         <CabinList />
       </Suspense>
     </div>
