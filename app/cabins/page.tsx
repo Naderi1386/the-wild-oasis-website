@@ -40,7 +40,7 @@ const page = (props: PagePropsType) => {
         <div className="mb-8 flex justify-end">
           <Filter/>
         </div>
-      <Suspense fallback={<Spinner />}>
+      <Suspense fallback={<Spinner />} key={filter}>
         <CabinList filter={filter} />
       </Suspense>
     </div>

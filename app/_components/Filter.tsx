@@ -1,9 +1,11 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { ReactNode } from "react";
 
 const Filter = () => {
   const searchParams = useSearchParams();
+  const capacity = searchParams.get("capacity") || "all";
   const pathname = usePathname();
   const { replace } = useRouter();
   const onFilterClick = (value: string) => {
@@ -12,32 +14,60 @@ const Filter = () => {
     replace(`${pathname}?${params.toString()}`, { scroll: false });
   };
   return (
-    <div className="border border-primary-800 flex items-center gap-3">
-      <button
+    <div className="border border-primary-800 flex items-center">
+      <Button
+        value="all"
+        capacity={capacity}
         onClick={() => onFilterClick("all")}
-        className="px-5 py-2 hover:bg-primary-700"
       >
+        {" "}
         All cabins
-      </button>
-      <button
+      </Button>
+      <Button
+        value="small"
+        capacity={capacity}
         onClick={() => onFilterClick("small")}
-        className="px-5 py-2 hover:bg-primary-700"
       >
+        {" "}
         1&mdash;3
-      </button>
-      <button
+      </Button>
+      <Button
+        value="medium"
+        capacity={capacity}
         onClick={() => onFilterClick("medium")}
-        className="px-5 py-2 hover:bg-primary-700"
       >
+        {" "}
         4&mdash;7
-      </button>
-      <button
+      </Button>
+      <Button
+        value="large"
+        capacity={capacity}
         onClick={() => onFilterClick("large")}
-        className="px-5 py-2 hover:bg-primary-700"
       >
+        {" "}
         8&mdash;12
-      </button>
+      </Button>
     </div>
+  );
+};
+
+interface ButtonPropsType {
+  children: ReactNode;
+  capacity: string;
+  onClick: (val: string) => void;
+  value: string;
+}
+
+const Button = ({ children, capacity, onClick, value }: ButtonPropsType) => {
+  return (
+    <button
+      onClick={() => onClick(value)}
+      className={`px-5 py-2 ${
+        capacity === value ? "bg-primary-700" : "hover:bg-primary-700"
+      }`}
+    >
+      {children}
+    </button>
   );
 };
 
