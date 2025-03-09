@@ -7,9 +7,9 @@ const Filter = () => {
   const pathname = usePathname();
   const { replace } = useRouter();
   const onFilterClick = (value: string) => {
-    const params=new URLSearchParams(searchParams)
-    params.set("capacity",value)
-    replace(`${pathname}?${params.toString()}`)
+    const params = new URLSearchParams(searchParams);
+    params.set("capacity", value);
+    replace(`${pathname}?${params.toString()}`, { scroll: false });
   };
   return (
     <div className="border border-primary-800 flex items-center gap-3">
