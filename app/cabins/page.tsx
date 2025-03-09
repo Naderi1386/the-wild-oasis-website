@@ -10,7 +10,18 @@ export const metadata: Metadata = {
   title: "Cabins",
 };
 
-const page = () => {
+interface searchParamsType{
+ capacity:string
+}
+
+interface PagePropsType {
+  searchParams:searchParamsType;
+}
+
+const page = (props: PagePropsType) => {
+  const {searchParams}=props
+  const filter=searchParams.capacity || "all"
+ 
   return (
     <div>
       <h1 className="text-4xl mb-5 text-accent-400 font-medium">
@@ -25,7 +36,7 @@ const page = () => {
         to paradise.
       </p>
       <Suspense fallback={<Spinner />}>
-        <CabinList />
+        <CabinList filter={filter} />
       </Suspense>
     </div>
   );
