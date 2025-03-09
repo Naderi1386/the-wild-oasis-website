@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import CabinList from "../_components/CabinList";
 import { Suspense } from "react";
 import Spinner from "../_components/Spinner";
+import Filter from "../_components/Filter";
 
 export const revalidate = 3600;
 
@@ -35,6 +36,10 @@ const page = (props: PagePropsType) => {
         away from home. The perfect spot for a peaceful, calm vacation. Welcome
         to paradise.
       </p>
+
+        <div className="mb-8 flex justify-end">
+          <Filter/>
+        </div>
       <Suspense fallback={<Spinner />}>
         <CabinList filter={filter} />
       </Suspense>
