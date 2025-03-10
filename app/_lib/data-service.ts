@@ -13,7 +13,7 @@ export async function getCabin(id: string) {
     .single();
 
   // For testing
-  await new Promise((res) => setTimeout(res, 2000));
+  // await new Promise((res) => setTimeout(res, 2000));
 
   if (error) {
     notFound();
@@ -98,15 +98,15 @@ export const getCabins = async function () {
 // }
 
 export async function getBookedDatesByCabinId(cabinId: number) {
-  let today:string | Date = new Date();
+  let today: string | Date = new Date();
   today.setUTCHours(0, 0, 0, 0);
-  today = today.toISOString(); 
+  today = today.toISOString();
 
   const { data, error } = await supabase
     .from("bookings")
     .select("*")
-    .eq("cabinID", cabinId) 
-    .or(`startDate.gte.${today},status.eq.checked-in`); 
+    .eq("cabinID", cabinId)
+    .or(`startDate.gte.${today},status.eq.checked-in`);
 
   if (error) {
     console.log("Supabase error:", error);
@@ -139,7 +139,6 @@ export interface SettingsType {
 
 export async function getSettings() {
   const { data, error } = await supabase.from("settings").select("*").single();
-  await new Promise((res) => setTimeout(res, 2000));
 
   if (error) {
     console.error(error);
