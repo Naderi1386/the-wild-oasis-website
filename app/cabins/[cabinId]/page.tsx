@@ -1,6 +1,8 @@
 import { CabinType } from "@/app/_components/CabinCard";
+import DateSelector from "@/app/_components/DateSelector";
+import ReservationForm from "@/app/_components/ReservationForm";
 import TextExpander from "@/app/_components/TextExpander";
-import { getCabin, getCabins } from "@/app/_lib/data-service";
+import { getBookedDatesByCabinId, getCabin, getCabins, getSettings, SettingsType } from "@/app/_lib/data-service";
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 
@@ -25,6 +27,8 @@ const page = async ({ params }: PagePropsType) => {
   const cabinID = params.cabinId;
   const cabin = (await getCabin(cabinID)) as CabinType;
   const { name, maxCapacity, image, description } = cabin;
+  const settings=await getSettings() as SettingsType
+  const bookedDates=await getBookedDatesByCabinId(Number(cabinID))
 
   return (
     <div className="max-w-6xl mx-auto mt-8">
@@ -73,9 +77,13 @@ const page = async ({ params }: PagePropsType) => {
       </div>
 
       <div>
-        <h2 className="text-5xl font-semibold text-center">
-          Reserve today. Pay on arrival.
+        <h2 className="text-5xl font-semibold text-center mb-10 text-accent-400">
+          Reserve {name} today. Pay on arrival.
         </h2>
+        <div className="grid grid-cols-2 border border-solid border-primary-800 min-h-[400px]">
+          <DateSelector />
+          <ReservationForm />
+        </div>
       </div>
     </div>
   );
