@@ -1,11 +1,15 @@
+"use client";
+
+import { useReservationContext } from "../_context/ReservationContext";
 import { CabinType } from "./CabinCard";
 
-interface ReservationFormPropsType{
-  cabin:CabinType
+interface ReservationFormPropsType {
+  cabin: CabinType;
 }
 
-function ReservationForm({cabin}: ReservationFormPropsType) {
-  const {maxCapacity} = cabin;
+function ReservationForm({ cabin }: ReservationFormPropsType) {
+  const { range } = useReservationContext();
+  const { maxCapacity } = cabin;
 
   return (
     <div className="">
@@ -23,7 +27,6 @@ function ReservationForm({cabin}: ReservationFormPropsType) {
           <p>{user.name}</p>
         </div> */}
       </div>
-
       <form className="bg-primary-900 py-10 px-16 text-lg flex gap-5 flex-col">
         <div className="space-y-2">
           <label htmlFor="numGuests">How many guests?</label>

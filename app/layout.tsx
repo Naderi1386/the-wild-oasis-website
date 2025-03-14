@@ -4,6 +4,7 @@ import { Metadata } from "next";
 
 import { Raleway } from "next/font/google";
 import Header from "./_components/Header";
+import ReservationContextProvider from "./_context/ReservationContext";
 const raleway = Raleway({
   subsets: ["latin"],
   display: "swap",
@@ -31,7 +32,7 @@ export default function RootLayout({ children }: RootLayoutPropsType) {
         <Header />
         <div className="grow grid">
           <main className="max-w-[80rem] mx-auto py-12 px-8 w-full">
-            {children}
+            <ReservationContextProvider>{children}</ReservationContextProvider>
           </main>
         </div>
       </body>
