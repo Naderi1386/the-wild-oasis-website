@@ -6,5 +6,5 @@ export const login = async () => {
   await signIn("github", { redirectTo: "/account" });
 };
 export const logout = async () => {
-  await signOut({ redirectTo: "/account" });
+  await signOut({ redirectTo: "/" });
 };
