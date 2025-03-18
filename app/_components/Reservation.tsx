@@ -1,3 +1,4 @@
+import { auth, UserAuthType } from "@/auth";
 import {
   getBookedDatesByCabinId,
   getSettings,
@@ -6,6 +7,7 @@ import {
 import { CabinType } from "./CabinCard";
 import DateSelector from "./DateSelector";
 import ReservationForm from "./ReservationForm";
+import LoginMessage from "./LoginMessage";
 
 interface ReservationPropsType {
   cabin: CabinType;
@@ -17,10 +19,12 @@ const Reservation = async ({ cabin }: ReservationPropsType) => {
     getBookedDatesByCabinId(Number(cabin.id)),
   ]);
   const settingsItems = settings as SettingsType;
+  const session=await auth()
+
   return (
     <div className="grid grid-cols-[55%,45%] items-stretch border border-solid border-primary-800 min-h-[400px]">
       <DateSelector settings={settingsItems} cabin={cabin} />
-      <ReservationForm cabin={cabin} />
+      {session ? <ReservationForm user={session.user as UserAuthType} cabin={cabin} /> : <LoginMessage/>}
     </div>
   );
 };
