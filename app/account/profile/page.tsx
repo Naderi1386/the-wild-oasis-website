@@ -1,17 +1,16 @@
-
 import SelectCountry from "@/app/_components/SelectCountry";
 import UpdateProfileForm from "@/app/_components/UpdateProfileForm";
+import { getGuest, GuestType } from "@/app/_lib/data-service";
+import { auth } from "@/auth";
 import { Metadata } from "next";
 
+export const metadata: Metadata = {
+  title: "Update profile",
+};
 
-export const metadata:Metadata={
-  title:"Update profile"
-}
-
-const page = () => {
-  // CHANGE
-   const nationality = "portugal";
-
+const page = async () => {
+  const session = await auth();
+  const guest = (await getGuest(session?.user?.email as string)) as GuestType;
 
   return (
     <div>
@@ -23,16 +22,16 @@ const page = () => {
         Providing the following information will make your check-in process
         faster and smoother. See you soon!
       </p>
-      <UpdateProfileForm>
+      <UpdateProfileForm guest={guest}>
         <SelectCountry
           name="nationality"
           id="nationality"
           className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
-          defaultCountry={nationality}
+          defaultCountry={guest.nationality as string}
         />
       </UpdateProfileForm>
     </div>
   );
-}
+};
 
-export default page
+export default page;

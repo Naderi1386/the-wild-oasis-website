@@ -53,16 +53,16 @@ export const getCabins = async function () {
 };
 
 // Guests are uniquely identified by their email address
-// export async function getGuest(email) {
-//   const { data, error } = await supabase
-//     .from('guests')
-//     .select('*')
-//     .eq('email', email)
-//     .single();
+export async function getGuest(email: string) {
+  const { data } = await supabase
+    .from("guests")
+    .select("*")
+    .eq("email", email)
+    .single();
 
-//   // No error here! We handle the possibility of no guest in the sign in callback
-//   return data;
-// }
+  // No error here! We handle the possibility of no guest in the sign in callback
+  return data;
+}
 
 // export async function getBooking(id) {
 //   const { data, error, count } = await supabase
@@ -168,16 +168,25 @@ export async function getCountries() {
 // /////////////
 // // CREATE
 
-// export async function createGuest(newGuest) {
-//   const { data, error } = await supabase.from('guests').insert([newGuest]);
+export interface GuestType {
+  fullName: string;
+  email: string;
+  nationalID?: number;
+  nationality?: string;
+  countryFlag?: string;
+  id?:number;
+}
 
-//   if (error) {
-//     console.error(error);
-//     throw new Error('Guest could not be created');
-//   }
+export async function createGuest(newGuest:GuestType) {
+  const { data, error } = await supabase.from("guests").insert([newGuest]);
 
-//   return data;
-// }
+  if (error) {
+    console.error(error);
+    throw new Error("Guest could not be created");
+  }
+
+  return data;
+}
 
 // export async function createBooking(newBooking) {
 //   const { data, error } = await supabase
@@ -197,22 +206,27 @@ export async function getCountries() {
 
 // /////////////
 // // UPDATE
+export interface GuestUpdatedType {
+  nationalID?: number;
+  nationality?: string;
+  countryFlag?: string;
+}
 
 // // The updatedFields is an object which should ONLY contain the updated data
-// export async function updateGuest(id, updatedFields) {
-//   const { data, error } = await supabase
-//     .from('guests')
-//     .update(updatedFields)
-//     .eq('id', id)
-//     .select()
-//     .single();
+export async function updateGuest(id:number, updatedFields:GuestUpdatedType) {
+  const { data, error } = await supabase
+    .from('guests')
+    .update(updatedFields)
+    .eq('id', id)
+    .select()
+    .single();
 
-//   if (error) {
-//     console.error(error);
-//     throw new Error('Guest could not be updated');
-//   }
-//   return data;
-// }
+  if (error) {
+    console.error(error);
+    throw new Error('Guest could not be updated');
+  }
+  return data;
+}
 
 // export async function updateBooking(id, updatedFields) {
 //   const { data, error } = await supabase
