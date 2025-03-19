@@ -10,7 +10,7 @@ interface UpdateProfileFormPropsType {
 }
 
 const UpdateProfileForm = ({ children, guest }: UpdateProfileFormPropsType) => {
-  const { fullName, email, countryFlag, nationalID, nationality } = guest;
+  const { fullName, email, countryFlag, nationalID } = guest;
   return (
     <form
       action={updateProfile}
