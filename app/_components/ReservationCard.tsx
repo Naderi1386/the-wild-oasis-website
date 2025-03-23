@@ -19,6 +19,8 @@ export interface BookingType {
   status: string;
   created_at: string;
   cabins: CabinType;
+  cabinID: number;
+  observations:string
 }
 
 interface ReservationCardPropsType {

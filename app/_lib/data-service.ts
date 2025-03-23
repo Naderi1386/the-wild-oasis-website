@@ -1,7 +1,7 @@
 import { eachDayOfInterval } from "date-fns";
 import { supabase } from "./supabase";
 import { notFound } from "next/navigation";
-import { BookingType } from "../_components/ReservationCard";
+import { UpdatedBookingType } from "./actions/actions";
 
 /////////////
 // GET
@@ -65,20 +65,20 @@ export async function getGuest(email: string) {
   return data;
 }
 
-// export async function getBooking(id) {
-//   const { data, error, count } = await supabase
-//     .from('bookings')
-//     .select('*')
-//     .eq('id', id)
-//     .single();
+export async function getBooking(id:number) {
+  const { data, error } = await supabase
+    .from('bookings')
+    .select('*')
+    .eq('id', id)
+    .single();
 
-//   if (error) {
-//     console.error(error);
-//     throw new Error('Booking could not get loaded');
-//   }
+  if (error) {
+    console.error(error);
+    throw new Error('Booking could not get loaded');
+  }
 
-//   return data;
-// }
+  return data;
+}
 
 export async function getBookings(guestID:number) {
   const { data, error } = await supabase
@@ -228,20 +228,20 @@ export async function updateGuest(id:number, updatedFields:GuestUpdatedType) {
   return data;
 }
 
-// export async function updateBooking(id, updatedFields) {
-//   const { data, error } = await supabase
-//     .from('bookings')
-//     .update(updatedFields)
-//     .eq('id', id)
-//     .select()
-//     .single();
+export async function updateBooking(id:number, updatedFields:UpdatedBookingType) {
+  console.log(id,updatedFields,"here")
+  const {  error } = await supabase
+    .from('bookings')
+    .update(updatedFields)
+    .eq('id', id)
+    .select()
+    .single();
 
-//   if (error) {
-//     console.error(error);
-//     throw new Error('Booking could not be updated');
-//   }
-//   return data;
-// }
+  if (error) {
+    console.error(error);
+    throw new Error('Booking could not be updated');
+  }
+}
 
 // /////////////
 // // DELETE
