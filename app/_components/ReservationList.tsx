@@ -14,9 +14,9 @@ const ReservationList = ({ bookingItems }: ReservationListPropsType) => {
       return currentBookings.filter((booking) => Number(booking.id) !== bookingId);
     }
   );
-  const handleDelete =async (bookingId: number) => {
+  const handleDelete = (bookingId: number) => {
     optimisticDelete(bookingId);
-    await deleteReservation(bookingId);
+     deleteReservation(bookingId);
   };
   return (
     <ul className="space-y-6">

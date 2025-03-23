@@ -25,7 +25,7 @@ export interface BookingType {
 
 interface ReservationCardPropsType {
   booking: BookingType;
-  onDelete: (bookingId: number) => Promise<void>;
+  onDelete: (bookingId: number) => void;
 }
 
 function ReservationCard({ booking,onDelete }: ReservationCardPropsType) {
