@@ -1,12 +1,19 @@
-import ReservationCard, { BookingType } from "@/app/_components/ReservationCard";
+import ReservationCard, {
+  BookingType,
+} from "@/app/_components/ReservationCard";
+import { getBookings } from "@/app/_lib/data-service";
+import { auth } from "@/auth";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Reservations",
 };
-const page = () => {
-  // CHANGE
-  const bookings:BookingType[] = [];
+const page = async () => {
+  const session = await auth();
+  // @ts-expect-error error
+  const guestID = Number(session?.user?.guestId);
+  const bookings = (await getBookings(guestID)) as unknown;
+  const bookingItems=bookings as BookingType[]
 
   return (
     <div>
@@ -14,7 +21,7 @@ const page = () => {
         Your reservations
       </h2>
 
-      {bookings.length === 0 ? (
+      {bookingItems.length === 0 ? (
         <p className="text-lg">
           You have no reservations yet. Check out our{" "}
           <a className="underline text-accent-500" href="/cabins">
@@ -23,13 +30,13 @@ const page = () => {
         </p>
       ) : (
         <ul className="space-y-6">
-          {bookings.map((booking) => (
+          {bookingItems.map((booking) => (
             <ReservationCard booking={booking} key={booking.id} />
           ))}
         </ul>
       )}
     </div>
   );
-}
+};
 
-export default page
+export default page;

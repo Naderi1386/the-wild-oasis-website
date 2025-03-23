@@ -1,8 +1,14 @@
 "use server";
 
 import { auth } from "@/auth";
-import { GuestUpdatedType, updateGuest } from "../data-service";
+import {
+  deleteBooking,
+  getBookings,
+  GuestUpdatedType,
+  updateGuest,
+} from "../data-service";
 import { revalidatePath } from "next/cache";
+import { BookingType } from "@/app/_components/ReservationCard";
 
 export const updateProfile = async (formData: FormData) => {
   const session = await auth();
@@ -21,6 +27,20 @@ export const updateProfile = async (formData: FormData) => {
     nationalID: Number(nationalID),
     nationality,
   };
-   await updateGuest(guestId,updatedItems)
-   revalidatePath("/account/profile")
+  await updateGuest(guestId, updatedItems);
+  revalidatePath("/account/profile");
+};
+
+export const deleteReservation = async (id: number) => {
+  const session = await auth();
+  if (!session) throw new Error("You must be logged in");
+  // @ts-expect-error err
+  const guestBookings = await getBookings(Number(session?.user?.guestId)) as unknown;
+  const bookings=guestBookings as BookingType[]
+  const bookingIds=bookings.map((booking)=>booking.id)
+  if(!bookingIds.includes(String(id))){
+    throw new Error("You are not allowed to delete this booking")
+  }
+  await deleteBooking(id);
+  revalidatePath("/account/reservations");
 };
