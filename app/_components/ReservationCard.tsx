@@ -20,14 +20,15 @@ export interface BookingType {
   created_at: string;
   cabins: CabinType;
   cabinID: number;
-  observations:string
+  observations: string;
 }
 
 interface ReservationCardPropsType {
   booking: BookingType;
+  onDelete: (bookingId: number) => Promise<void>;
 }
 
-function ReservationCard({ booking }: ReservationCardPropsType) {
+function ReservationCard({ booking,onDelete }: ReservationCardPropsType) {
   const {
     id,
 
@@ -98,7 +99,7 @@ function ReservationCard({ booking }: ReservationCardPropsType) {
               <PencilSquareIcon className="h-5 w-5 text-primary-600 group-hover:text-primary-800 transition-colors" />
               <span className="mt-1">Edit</span>
             </a>
-            <DeleteReservation bookingId={id} />
+            <DeleteReservation onDelete={onDelete} bookingId={id} />
           </>
         ) : null}
       </div>

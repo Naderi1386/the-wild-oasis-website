@@ -1,6 +1,5 @@
-import ReservationCard, {
-  BookingType,
-} from "@/app/_components/ReservationCard";
+import { BookingType } from "@/app/_components/ReservationCard";
+import ReservationList from "@/app/_components/ReservationList";
 import { getBookings } from "@/app/_lib/data-service";
 import { auth } from "@/auth";
 import { Metadata } from "next";
@@ -13,7 +12,7 @@ const page = async () => {
   // @ts-expect-error error
   const guestID = Number(session?.user?.guestId);
   const bookings = (await getBookings(guestID)) as unknown;
-  const bookingItems=bookings as BookingType[]
+  const bookingItems = bookings as BookingType[];
 
   return (
     <div>
@@ -29,11 +28,7 @@ const page = async () => {
           </a>
         </p>
       ) : (
-        <ul className="space-y-6">
-          {bookingItems.map((booking) => (
-            <ReservationCard booking={booking} key={booking.id} />
-          ))}
-        </ul>
+        <ReservationList bookingItems={bookingItems} />
       )}
     </div>
   );

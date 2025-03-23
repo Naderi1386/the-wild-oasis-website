@@ -247,11 +247,12 @@ export async function updateBooking(id:number, updatedFields:UpdatedBookingType)
 // // DELETE
 
 export async function deleteBooking(id:number) {
-  const {  error } = await supabase.from('bookings').delete().eq('id', id);
+  const { error } = await supabase.from("bookings").delete().eq("id", id);
+  // For testing
+  await new Promise((res) => setTimeout(res, 2000));
 
   if (error) {
     console.error(error);
-    throw new Error('Booking could not be deleted');
+    throw new Error("Booking could not be deleted");
   }
-  
 }

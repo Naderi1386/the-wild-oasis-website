@@ -37,8 +37,7 @@ export const deleteReservation = async (id: number) => {
   const session = await auth();
   if (!session) throw new Error("You must be logged in");
   // @ts-expect-error err
-  const guestBookings = (await getBookings(
-    Number(session?.user?.guestId)
+  const guestBookings = (await getBookings(Number(session?.user?.guestId)
   )) as unknown;
   const bookings = guestBookings as BookingType[];
   const bookingIds = bookings.map((booking) => Number(booking.id));
