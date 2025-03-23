@@ -37,8 +37,8 @@ export const deleteReservation = async (id: number) => {
   // @ts-expect-error err
   const guestBookings = await getBookings(Number(session?.user?.guestId)) as unknown;
   const bookings=guestBookings as BookingType[]
-  const bookingIds=bookings.map((booking)=>booking.id)
-  if(!bookingIds.includes(String(id))){
+  const bookingIds=bookings.map((booking)=>Number(booking.id))
+  if(!bookingIds.includes(Number(id))){
     throw new Error("You are not allowed to delete this booking")
   }
   await deleteBooking(id);
