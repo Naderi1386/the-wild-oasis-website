@@ -23,7 +23,7 @@ const Reservation = async ({ cabin }: ReservationPropsType) => {
 
   return (
     <div className="grid grid-cols-[55%,45%] items-stretch border border-solid border-primary-800 min-h-[400px]">
-      <DateSelector settings={settingsItems} cabin={cabin} />
+      <DateSelector bookedDates={bookedDates} settings={settingsItems} cabin={cabin} />
       {session ? <ReservationForm user={session.user as UserAuthType} cabin={cabin} /> : <LoginMessage/>}
     </div>
   );
