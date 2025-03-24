@@ -81,7 +81,7 @@ export const createReservation = async (
   };
   await createBooking(newBooking)
   revalidatePath(`/cabins/${cabinId}`)
-  redirect('/thankyou')
+  redirect('/cabins/thankyou')
 };
 
 export const deleteReservation = async (id: number) => {
