@@ -3,6 +3,9 @@
 import { UserAuthType } from "@/auth";
 import { useReservationContext } from "../_context/ReservationContext";
 import { CabinType } from "./CabinCard";
+import { differenceInDays } from "date-fns";
+import { createReservation } from "../_lib/actions/actions";
+import { useFormStatus } from "react-dom";
 
 interface ReservationFormPropsType {
   cabin: CabinType;
@@ -10,8 +13,20 @@ interface ReservationFormPropsType {
 }
 
 function ReservationForm({ cabin, user }: ReservationFormPropsType) {
-  const { range } = useReservationContext();
-  const { maxCapacity } = cabin;
+  const { range, resetRange } = useReservationContext();
+  const { maxCapacity, regularPrice, discount, id } = cabin;
+  const startDate = range.from as Date;
+  const endDate = range.to as Date;
+  const numNights = differenceInDays(endDate, startDate);
+  const cabinPrice = numNights * (regularPrice - discount);
+  const bookingData = {
+    startDate,
+    endDate,
+    numNights,
+    cabinPrice,
+    cabinId: id,
+  };
+  const createReservationWithData = createReservation.bind(null, bookingData);
 
   return (
     <div className="">
@@ -28,7 +43,13 @@ function ReservationForm({ cabin, user }: ReservationFormPropsType) {
           <p>{user.name}</p>
         </div>
       </div>
-      <form className="bg-primary-900 py-10 px-16 text-lg flex gap-5 flex-col">
+      <form
+        action={async (formData: FormData) => {
+          await createReservationWithData(formData);
+          resetRange();
+        }}
+        className="bg-primary-900 py-10 px-16 text-lg flex gap-5 flex-col"
+      >
         <div className="space-y-2">
           <label htmlFor="numGuests">How many guests?</label>
           <select
@@ -61,15 +82,29 @@ function ReservationForm({ cabin, user }: ReservationFormPropsType) {
         </div>
 
         <div className="flex justify-end items-center gap-6">
-          <p className="text-primary-300 text-base">Start by selecting dates</p>
-
-          <button className="bg-accent-500 px-8 py-4 text-primary-800 font-semibold hover:bg-accent-600 transition-all disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300">
-            Reserve now
-          </button>
+          {startDate && endDate ? (
+            <Button />
+          ) : (
+            <p className="text-primary-300 text-base">
+              Start by selecting dates
+            </p>
+          )}
         </div>
       </form>
     </div>
   );
 }
+
+const Button = () => {
+  const { pending } = useFormStatus();
+  return (
+    <button
+      disabled={pending}
+      className="bg-accent-500 px-8 py-4 text-primary-800 font-semibold hover:bg-accent-600 transition-all disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300"
+    >
+      {pending ? "Reserving..." : "Reserve now"}
+    </button>
+  );
+};
 
 export default ReservationForm;

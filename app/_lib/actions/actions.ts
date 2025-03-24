@@ -2,6 +2,7 @@
 
 import { auth } from "@/auth";
 import {
+  createBooking,
   deleteBooking,
   getBookings,
   GuestUpdatedType,
@@ -31,6 +32,56 @@ export const updateProfile = async (formData: FormData) => {
   };
   await updateGuest(guestId, updatedItems);
   revalidatePath("/account/profile");
+};
+
+export interface NewReservationType {
+  startDate: Date;
+  endDate: Date;
+  numGuests: number;
+  numNights: number;
+  observations: string;
+  totalPrice: number;
+  extrasPrice: number;
+  cabinID: string;
+  status: string;
+  isPaid: boolean;
+  hasBreakfast: boolean;
+  guestID:string
+}
+export interface BookingDataType {
+  startDate: Date;
+  endDate: Date;
+  numNights: number;
+  cabinPrice: number;
+  cabinId: string;
+}
+
+export const createReservation = async (
+  bookingData: BookingDataType,
+  formData: FormData
+) => {
+  const session = await auth();
+  if (!session) throw new Error("You must be logged in");
+  const { cabinId, cabinPrice, endDate, numNights, startDate } = bookingData;
+    // @ts-expect-error err
+  const guestID=String(session?.user?.guestId)
+  const newBooking: NewReservationType = {
+    endDate,
+    numNights,
+    startDate,
+    numGuests: Number(formData.get("numGuests")),
+    observations: String(formData.get("observations")).slice(0, 1000),
+    extrasPrice: 0,
+    totalPrice: cabinPrice,
+    cabinID:cabinId,
+    status: "unconfirmed",
+    hasBreakfast: false,
+    isPaid: false,
+    guestID
+  };
+  await createBooking(newBooking)
+  revalidatePath(`/cabins/${cabinId}`)
+  redirect('/thankyou')
 };
 
 export const deleteReservation = async (id: number) => {
